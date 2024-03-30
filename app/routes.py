@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 from functools import wraps
 
 from app import app
+from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm
 
 
 @app.route('/')
