@@ -26,6 +26,7 @@ class AddCafeForm(FlaskForm):
     seats = StringField('Seats', validators=[DataRequired()])
     coffee_price = StringField('Coffee Price', validators=[DataRequired()])
     has_sockets = BooleanField('Has Sockets', validators=[DataRequired()])
+    has_toilet = BooleanField('Has Toilet', validators=[DataRequired()])
     has_wifi = BooleanField('Has Wifi', validators=[DataRequired()])
     can_take_calls = BooleanField('Can Take Calls', validators=[DataRequired()])
     submit = SubmitField('Add Cafe')
