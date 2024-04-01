@@ -6,12 +6,13 @@ from libgravatar import Gravatar
 from functools import wraps
 
 from app import app, login_manager, db
+from app.models import User
 from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return db.get_or_404()
+    return db.get_or_404(User, user_id)
 
 
 @app.route('/')

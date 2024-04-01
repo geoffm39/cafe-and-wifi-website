@@ -4,7 +4,13 @@ from dotenv import load_dotenv
 from flask_ckeditor import CKEditor
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
 import os
+
+
+class Base(DeclarativeBase):
+    pass
+
 
 app = Flask(__name__)
 
@@ -13,8 +19,8 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 Bootstrap5(app)
 ckeditor = CKEditor(app)
 
+db = SQLAlchemy(model_class=Base)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
-db = SQLAlchemy()
 db.init_app(app)
 
 login_manager = LoginManager()
