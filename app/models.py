@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, ForeignKey, Text, Boolean
+from sqlalchemy import Integer, String, ForeignKey, Text, Boolean, Float
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from flask_login import UserMixin
 from typing import List, Optional
@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
     occupation = Mapped[Optional[str]]
+    favourites: Mapped[List['Cafe']] = relationship(back_populates='user')
 
 
 class Cafe(db.Model):
@@ -28,6 +29,15 @@ class Cafe(db.Model):
     can_take_calls: Mapped[bool] = mapped_column(Boolean)
     seats: Mapped[str] = mapped_column(String(100))
     coffee_price: Mapped[str] = mapped_column(String(100))
+    rating: Mapped[Optional[float]]
+
+
+class Rating(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    rating: Mapped[int] = mapped_column(Integer)
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    user: Mapped['User'] = relationship(back_populates='favourites')
+    cafe_id: Mapped[int] = mapped_column(ForeignKey('cafe.id'))
 
 
 with app.app_context():
