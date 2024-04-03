@@ -6,6 +6,13 @@ from typing import List, Optional
 from app import app, db
 
 
+favorites = db.Table(
+    'favourites',
+    Column('user_id', ForeignKey('users.id'), primary_key=True),
+    Column('cafe_id', ForeignKey('cafe.id'), primary_key=True)
+)
+
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -14,6 +21,7 @@ class User(db.Model, UserMixin):
     name: Mapped[str] = mapped_column(String(100))
     occupation = Mapped[Optional[str]]
     ratings: Mapped[List['Rating']] = relationship(back_populates='user', cascade='all, delete-orphan')
+    favorite_cafes: Mapped[List['Cafe']] = relationship(secondary=favorites)
 
 
 class Cafe(db.Model):
@@ -42,12 +50,6 @@ class Rating(db.Model):
     cafe_id: Mapped[int] = mapped_column(ForeignKey('cafe.id'))
     cafe: Mapped['Cafe'] = relationship(back_populates='ratings')
 
-
-favorites = db.Table(
-    'favourites',
-    Column('user_id', ForeignKey(User.id), primary_key=True),
-    Column('cafe_id', ForeignKey(Cafe.id), primary_key=True)
-)
 
 with app.app_context():
     db.create_all()
