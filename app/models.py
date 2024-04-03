@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
     occupation = Mapped[Optional[str]]
-    favourites: Mapped[List['Cafe']] = relationship(back_populates='user')
+    ratings: Mapped[List['Rating']] = relationship(back_populates='user')
 
 
 class Cafe(db.Model):
@@ -30,14 +30,17 @@ class Cafe(db.Model):
     seats: Mapped[str] = mapped_column(String(100))
     coffee_price: Mapped[str] = mapped_column(String(100))
     rating: Mapped[Optional[float]]
+    ratings: Mapped[List['Rating']] = relationship(back_populates='cafe')
 
 
 class Rating(db.Model):
+    __tablename__ = 'rating'
     id: Mapped[int] = mapped_column(primary_key=True)
     rating: Mapped[int] = mapped_column(Integer)
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
-    user: Mapped['User'] = relationship(back_populates='favourites')
+    user: Mapped['User'] = relationship(back_populates='ratings')
     cafe_id: Mapped[int] = mapped_column(ForeignKey('cafe.id'))
+    cafe: Mapped['Cafe'] = relationship(back_populates='ratings')
 
 
 with app.app_context():
