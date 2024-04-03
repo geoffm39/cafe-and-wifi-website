@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, ForeignKey, Text, Boolean, Float
+from sqlalchemy import Integer, String, ForeignKey, Text, Boolean, Float, Column
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from flask_login import UserMixin
 from typing import List, Optional
@@ -42,6 +42,12 @@ class Rating(db.Model):
     cafe_id: Mapped[int] = mapped_column(ForeignKey('cafe.id'))
     cafe: Mapped['Cafe'] = relationship(back_populates='ratings')
 
+
+favorites = db.Table(
+    'favourites',
+    Column('user_id', ForeignKey(User.id), primary_key=True),
+    Column('cafe_id', ForeignKey(Cafe.id), primary_key=True)
+)
 
 with app.app_context():
     db.create_all()
