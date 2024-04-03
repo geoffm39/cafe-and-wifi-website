@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
     occupation = Mapped[Optional[str]]
-    ratings: Mapped[List['Rating']] = relationship(back_populates='user')
+    ratings: Mapped[List['Rating']] = relationship(back_populates='user', cascade='all, delete-orphan')
 
 
 class Cafe(db.Model):
@@ -29,8 +29,8 @@ class Cafe(db.Model):
     can_take_calls: Mapped[bool] = mapped_column(Boolean)
     seats: Mapped[str] = mapped_column(String(100))
     coffee_price: Mapped[str] = mapped_column(String(100))
-    rating: Mapped[Optional[float]]
-    ratings: Mapped[List['Rating']] = relationship(back_populates='cafe')
+    average_rating: Mapped[Optional[float]]
+    ratings: Mapped[List['Rating']] = relationship(back_populates='cafe', cascade='all, delete-orphan')
 
 
 class Rating(db.Model):
