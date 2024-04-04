@@ -7,8 +7,8 @@ from flask_ckeditor import CKEditorField
 class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    name = StringField('Name', validators=[DataRequired()])
-    occupation = StringField('Occupation')
+    # name = StringField('Name')
+    # occupation = StringField('Occupation')
     submit = SubmitField('Create Account')
 
 

@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
+    avatar_url: Mapped[str] = mapped_column(String(250))
     occupation = Mapped[Optional[str]]
     ratings: Mapped[List['Rating']] = relationship(back_populates='user', cascade='all, delete-orphan')
     favorite_cafes: Mapped[List['Cafe']] = relationship(secondary=favorites)
