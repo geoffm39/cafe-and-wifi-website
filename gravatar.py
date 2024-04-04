@@ -28,3 +28,8 @@ def validate_image_size(size):
 
 def size_is_valid(size):
     return MINIMUM_IMAGE_SIZE <= size <= MAXIMUM_IMAGE_SIZE
+
+
+def gravatar_url(email, size=100, rating='g', default='retro', force_default=False):
+    hash_value = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
+    return f"https://www.gravatar.com/avatar/{hash_value}?s={size}&d={default}&r={rating}&f={force_default}"
