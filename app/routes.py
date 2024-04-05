@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 from functools import wraps
 from app import app, login_manager, db
-from gravatar import get_gravatar_url, gravatar_url
+from gravatar import get_gravatar_url
 from app.models import User
 from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm
 
@@ -29,7 +29,7 @@ def register():
         if existing_user:
             flash('Email already exists, please login')
             return redirect(url_for('login'))
-        avatar_url = gravatar_url(email, size=40, rating='x')
+        avatar_url = get_gravatar_url(email)
         new_user = User(email=email,
                         password=hashed_password,
                         avatar_url=avatar_url)
@@ -59,4 +59,4 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    redirect(url_for('home'))
+    return redirect(url_for('home'))
