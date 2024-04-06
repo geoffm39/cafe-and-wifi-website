@@ -6,3 +6,7 @@
 .explore_header_link{
     margin-left: 10px;
 }
+
+.feature_image{
+    background-size: cover;
+}
