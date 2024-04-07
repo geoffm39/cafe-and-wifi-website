@@ -60,3 +60,13 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+
+@app.route('/explore')
+def explore():
+    return render_template('explore.html')
+
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
