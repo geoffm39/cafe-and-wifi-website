@@ -62,6 +62,16 @@ def logout():
     return redirect(url_for('home'))
 
 
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+
+@app.route('/suggest-place')
+def suggest_place():
+    return render_template('suggest_place.html')
+
+
 @app.route('/explore')
 def explore():
     return render_template('explore.html')
