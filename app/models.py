@@ -30,7 +30,7 @@ class Cafe(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), unique=True)
     map_url: Mapped[str] = mapped_column(String(250))
-    image_url: Mapped[str] = mapped_column(String(250))
+    img_url: Mapped[str] = mapped_column(String(250))
     location: Mapped[str] = mapped_column(String(100))
     has_sockets: Mapped[bool] = mapped_column(Boolean)
     has_toilet: Mapped[bool] = mapped_column(Boolean)

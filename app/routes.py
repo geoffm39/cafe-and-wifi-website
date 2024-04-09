@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 from functools import wraps
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
-from app.models import User
+from app.models import User, Cafe
 from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm
 
 
@@ -74,7 +74,8 @@ def suggest_place():
 
 @app.route('/explore')
 def explore():
-    return render_template('explore.html')
+    cafes = db.session.execute(db.select(Cafe)).scalars().all()
+    return render_template('explore.html', cafes=cafes)
 
 
 @app.route('/contact')
