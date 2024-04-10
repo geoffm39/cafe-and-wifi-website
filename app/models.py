@@ -32,12 +32,12 @@ class Cafe(db.Model):
     map_url: Mapped[str] = mapped_column(String(250))
     img_url: Mapped[str] = mapped_column(String(250))
     location: Mapped[str] = mapped_column(String(100))
-    has_sockets: Mapped[bool] = mapped_column(Boolean)
-    has_toilet: Mapped[bool] = mapped_column(Boolean)
-    has_wifi: Mapped[bool] = mapped_column(Boolean)
-    can_take_calls: Mapped[bool] = mapped_column(Boolean)
-    seats: Mapped[str] = mapped_column(String(100))
-    coffee_price: Mapped[str] = mapped_column(String(100))
+    has_sockets: Mapped[bool]
+    has_toilet: Mapped[bool]
+    has_wifi: Mapped[bool]
+    can_take_calls: Mapped[bool]
+    seats: Mapped[Optional[str]] = mapped_column(String(100))
+    coffee_price: Mapped[Optional[str]] = mapped_column(String(100))
     average_rating: Mapped[Optional[float]]
     ratings: Mapped[List['Rating']] = relationship(back_populates='cafe', cascade='all, delete-orphan')
 
@@ -45,7 +45,7 @@ class Cafe(db.Model):
 class Rating(db.Model):
     __tablename__ = 'rating'
     id: Mapped[int] = mapped_column(primary_key=True)
-    rating: Mapped[int] = mapped_column(Integer)
+    rating: Mapped[int]
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     user: Mapped['User'] = relationship(back_populates='ratings')
     cafe_id: Mapped[int] = mapped_column(ForeignKey('cafe.id'))
