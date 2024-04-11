@@ -6,7 +6,7 @@ from typing import List, Optional
 from app import app, db
 
 
-favorites = db.Table(
+favourites = db.Table(
     'favourites',
     Column('user_id', ForeignKey('users.id'), primary_key=True),
     Column('cafe_id', ForeignKey('cafe.id'), primary_key=True)
@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     avatar_url: Mapped[str] = mapped_column(String(250))
     occupation = Mapped[Optional[str]]
     ratings: Mapped[List['Rating']] = relationship(back_populates='user', cascade='all, delete-orphan')
-    favorite_cafes: Mapped[List['Cafe']] = relationship(secondary=favorites)
+    favourite_cafes: Mapped[List['Cafe']] = relationship(secondary=favourites)
 
 
 class Cafe(db.Model):
