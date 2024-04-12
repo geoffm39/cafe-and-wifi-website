@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, ForeignKey, Text, Boolean, Float, Column
+from sqlalchemy import Integer, String, ForeignKey, Text, Boolean, Float, Column, CheckConstraint
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from flask_login import UserMixin
 from typing import List, Optional
@@ -45,7 +45,7 @@ class Cafe(db.Model):
 class Rating(db.Model):
     __tablename__ = 'rating'
     id: Mapped[int] = mapped_column(primary_key=True)
-    rating: Mapped[int]
+    rating: Mapped[int] = mapped_column(CheckConstraint('rating >= 1 AND rating <= 5', name='rating_range_check'))
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     user: Mapped['User'] = relationship(back_populates='ratings')
     cafe_id: Mapped[int] = mapped_column(ForeignKey('cafe.id'))
