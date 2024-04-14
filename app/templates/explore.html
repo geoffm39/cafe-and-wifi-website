@@ -10,22 +10,18 @@
             <div class="flip-card-inner">
                 <div class="flip-card-front">
                     <div class="card">
-                        <img src=
-                                     "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20230305182658/HTML-tutorial.jpg"
-                             class="card-img-top" alt="Front Image">
+                        <img src="{{ cafe.img_url }}"
+                             class="card-img-top" alt="Cafe Image">
                         <div class="card-body">
-                            <h5 class="card-title">Front Side</h5>
-                            <p class="card-text">HTML</p>
+                            <h5 class="card-title">{{ cafe.name }}</h5>
+                            <p class="card-text">{{ cafe.location }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="flip-card-back">
                     <div class="card">
-                        <img src=
-                                     "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20230310153232/ReactJS-Tutorial.jpg"
-                             class="card-img-top" alt="Back Image">
                         <div class="card-body">
-                            <h5 class="card-title">Back Side</h5>
+                            <h5 class="card-title">Rating: {{ cafe.average_rating }}</h5>
                             <p class="card-text">React JS</p>
                         </div>
                     </div>
@@ -34,32 +30,5 @@
         </div>
     </div>
     {% endfor %}
-    <div class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-4 px-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-4 px-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-4 px-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}

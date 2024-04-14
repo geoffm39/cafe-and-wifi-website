@@ -75,6 +75,17 @@ def suggest_place():
 @app.route('/explore')
 def explore():
     cafes = db.session.execute(db.select(Cafe)).scalars().all()
+    for obj in cafes:
+        # Loop through each object in the list
+        for attr in obj.__table__.columns:
+            print(type(attr))
+            # Loop through each column of the object's table
+            if attr.type.python_type is bool:
+                # Check if the column is of boolean type
+                value = getattr(obj, attr.name)
+                # Get the value of the attribute
+                print(f"{attr.name}: {value}")
+                # Print the column name and its value
     return render_template('explore.html', cafes=cafes)
 
 

@@ -13,6 +13,9 @@
 
 .flip-card {
             perspective: 1000px;
+            height: 290px;
+            width: 350px;
+            margin: 20px 0;
 }
 
 .flip-card-inner {
@@ -48,6 +51,6 @@
 }
 
 .card-img-top {
-    max-height: 200px;
+    height: 200px;
     object-fit: cover;
 }
