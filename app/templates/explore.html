@@ -21,8 +21,15 @@
                 <div class="flip-card-back">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Rating: {{ cafe.average_rating }}</h5>
-                            <p class="card-text">React JS</p>
+                            {% if cafe.average_rating %}
+                                <h5 class="card-title">Rating: {{ cafe.average_rating }}</h5>
+                            {% else %}
+                                <h5 class="card-title">No ratings yet - rate this cafe!</h5>
+                            {% endif %}
+                            <p class="card-text">Wi-Fi: {{ cafe.has_wifi }}</p>
+                            <p class="card-text">Sockets: {{ cafe.has_sockets }}</p>
+                            <p class="card-text">Toilet: {{ cafe.has_toilet }}</p>
+                            <p class="card-text">Can take calls: {{ cafe.can_take_calls }}</p>
                         </div>
                     </div>
                 </div>
