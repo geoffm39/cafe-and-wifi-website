@@ -81,6 +81,12 @@ def explore():
     return render_template('explore.html', cafes=cafes)
 
 
+@app.route('/cafe/<int:cafe_id>', methods=['GET', 'POST'])
+def view_cafe(cafe_id):
+    requested_cafe = db.get_or_404(Cafe, cafe_id)
+    return render_template('cafe.html', cafe=requested_cafe)
+
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
