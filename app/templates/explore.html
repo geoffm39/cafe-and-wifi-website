@@ -21,17 +21,34 @@
                 <div class="flip-card-back">
                     <div class="card">
                         <div class="card-body">
-                            {% if cafe.average_rating %}
+                            <div class="text-center">
+                                {% if cafe.average_rating %}
                                 <h5 class="card-title">Rating: {{ cafe.average_rating }}</h5>
-                            {% else %}
+                                {% else %}
                                 <h5 class="card-title">No ratings yet - rate this cafe!</h5>
-                            <br>
-                            {% endif %}
-                            <p class="card-text">Wi-Fi: {{ cafe.has_wifi }}</p>
-                            <p class="card-text">Sockets: {{ cafe.has_sockets }}</p>
-                            <p class="card-text">Toilet: {{ cafe.has_toilet }}</p>
-                            <p class="card-text">Can take calls: {{ cafe.can_take_calls }}</p>
-                            <a href="" class="btn btn-warning">View</a>
+                                {% endif %}
+                            </div>
+                            <ul class="list-group list-group-flush flip-card-back-text">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    Wi-Fi:
+                                    <span>{{ cafe.has_wifi }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    Sockets:
+                                    <span>{{ cafe.has_sockets }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    Toilet:
+                                    <span>{{ cafe.has_toilet }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    Can take calls:
+                                    <span>{{ cafe.can_take_calls }}</span>
+                                </li>
+                            </ul>
+                            <div class="text-center">
+                                <a href="" class="btn btn-warning">View</a>
+                            </div>
                         </div>
                     </div>
                 </div>

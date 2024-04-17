@@ -46,7 +46,6 @@
 
 .flip-card-back {
     text-align: left;
-    background-color: #343a40;
     color: #000;
     transform: rotateY(180deg);
 }
@@ -54,4 +53,11 @@
 .card-img-top {
     height: 200px;
     object-fit: cover;
+}
+
+.flip-card-back-text {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
