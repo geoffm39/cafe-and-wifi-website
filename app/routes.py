@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, abort
+from flask import render_template, redirect, url_for, flash, abort, request
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
@@ -75,7 +75,10 @@ def suggest_place():
 
 @app.route('/explore')
 def explore():
-    cafes = db.session.execute(db.select(Cafe)).scalars().all()
+    if request.args:
+        cafes = db.session.execute(db.select(Cafe)).scalars().all()
+    else:
+        cafes = db.session.execute(db.select(Cafe)).scalars().all()
     for cafe in cafes:
         convert_booleans_to_symbols(cafe)
     return render_template('explore.html', cafes=cafes)
