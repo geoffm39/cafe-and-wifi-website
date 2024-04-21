@@ -41,6 +41,9 @@ class Cafe(db.Model):
     average_rating: Mapped[Optional[float]]
     ratings: Mapped[List['Rating']] = relationship(back_populates='cafe', cascade='all, delete-orphan')
 
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
 
 class Rating(db.Model):
     __tablename__ = 'rating'
