@@ -76,6 +76,7 @@ def suggest_place():
 @app.route('/explore')
 def explore():
     if request.args:
+        print(request.args)
         cafes = db.session.execute(db.select(Cafe)).scalars().all()
     else:
         cafes = db.session.execute(db.select(Cafe)).scalars().all()

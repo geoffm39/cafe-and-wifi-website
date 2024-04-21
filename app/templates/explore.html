@@ -13,24 +13,29 @@
                 <h1 class="modal-title fs-5" id="filterModalLabel">Filter</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="container text-center">
-                    <div class="btn-group" role="group" aria-label="filter toggles">
-                        <input type="checkbox" class="btn-check" id="wifi_check" autocomplete="off">
-                        <label class="btn btn-outline-dark" for="wifi_check">Wi-Fi</label>
-                        <input type="checkbox" class="btn-check" id="socket_check" autocomplete="off">
-                        <label class="btn btn-outline-dark" for="socket_check">Sockets</label>
-                        <input type="checkbox" class="btn-check" id="toilet_check" autocomplete="off">
-                        <label class="btn btn-outline-dark" for="toilet_check">Toilet</label>
-                        <input type="checkbox" class="btn-check" id="calls_check" autocomplete="off">
-                        <label class="btn btn-outline-dark" for="calls_check">Takes Calls</label>
+            <form action="{{ url_for('explore') }}" method="GET">
+                <div class="modal-body">
+
+                    <div class="container text-center">
+                        <div class="btn-group" role="group" aria-label="filter toggles">
+                            <input type="checkbox" class="btn-check" name="wifi" id="wifi_check" autocomplete="off">
+                            <label class="btn btn-outline-dark" for="wifi_check">Wi-Fi</label>
+                            <input type="checkbox" class="btn-check" name="socket" id="socket_check" autocomplete="off">
+                            <label class="btn btn-outline-dark" for="socket_check">Sockets</label>
+                            <input type="checkbox" class="btn-check" name="toilet" id="toilet_check" autocomplete="off">
+                            <label class="btn btn-outline-dark" for="toilet_check">Toilet</label>
+                            <input type="checkbox" class="btn-check" name="takes_calls" id="calls_check"
+                                   autocomplete="off">
+                            <label class="btn btn-outline-dark" for="calls_check">Takes Calls</label>
+                        </div>
                     </div>
+
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Clear Filters</button>
-                <button type="button" class="btn btn-warning">Apply Filters</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Clear Filters</button>
+                    <button type="submit" class="btn btn-warning">Apply Filters</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
