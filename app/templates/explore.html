@@ -3,25 +3,36 @@
 {% block title %}Explore new Places{% endblock %}
 
 {% block content %}
-<div class="container my-2">
+<div class="container-fluid my-2">
     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#filter-model">Filter</button>
 </div>
-<div class="modal fade" id="filter-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Filter</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-warning">Apply Filters</button>
-      </div>
+<div class="modal fade" id="filter-model" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="filterModalLabel">Filter</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container text-center">
+                    <div class="btn-group" role="group" aria-label="filter toggles">
+                        <input type="checkbox" class="btn-check" id="wifi_check" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="wifi_check">Wi-Fi</label>
+                        <input type="checkbox" class="btn-check" id="socket_check" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="socket_check">Sockets</label>
+                        <input type="checkbox" class="btn-check" id="toilet_check" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="toilet_check">Toilet</label>
+                        <input type="checkbox" class="btn-check" id="calls_check" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="calls_check">Takes Calls</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Clear Filters</button>
+                <button type="button" class="btn btn-warning">Apply Filters</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="row px-4 py-3">
     {% for cafe in cafes %}

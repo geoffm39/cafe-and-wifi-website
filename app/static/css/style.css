@@ -61,3 +61,8 @@
     padding-left: 30px;
     padding-right: 30px;
 }
+
+.btn-check:checked + .btn-outline-dark {
+    background-color: #ffc107;
+    color: #000;
+}
