@@ -19,3 +19,7 @@ def apply_symbol(cafe: Cafe, attribute: Column):
     else:
         setattr(cafe, attribute.name, '✗')
 
+
+def convert_checkbox_strings_to_booleans(input_dictionary: dict):
+    converted_dictionary = {key: True if value == 'on' else False for key, value in input_dictionary.items()}
+    return converted_dictionary
