@@ -1,23 +1,19 @@
-from sqlalchemy import Column
-from app.models import Cafe
+def convert_booleans_to_symbols(dictionary: dict):
+    for key, value in dictionary.items():
+        if not value_is_boolean(value):
+            continue
+        if value_is_true(value):
+            dictionary[key] = '✓'
+        else:
+            dictionary[key] = '✗'
 
 
-def convert_booleans_to_symbols(cafe: Cafe):
-    for attribute in cafe.__table__.columns:
-        if attribute_is_boolean(attribute):
-            apply_symbol(cafe, attribute)
+def value_is_boolean(value):
+    return isinstance(value, bool)
 
 
-def attribute_is_boolean(attribute: Column):
-    return attribute.type.python_type is bool
-
-
-def apply_symbol(cafe: Cafe, attribute: Column):
-    value_is_true = getattr(cafe, attribute.name)
-    if value_is_true:
-        setattr(cafe, attribute.name, '✓')
-    else:
-        setattr(cafe, attribute.name, '✗')
+def value_is_true(value):
+    return value
 
 
 def convert_checkbox_strings_to_booleans(input_dictionary: dict):

@@ -81,9 +81,10 @@ def explore():
         cafes = db.session.execute(db.select(Cafe).filter_by(**boolean_filters)).scalars().all()
     else:
         cafes = db.session.execute(db.select(Cafe)).scalars().all()
-    for cafe in cafes:
+    cafe_dictionaries = [cafe.to_dict() for cafe in cafes]
+    for cafe in cafe_dictionaries:
         convert_booleans_to_symbols(cafe)
-    return render_template('explore.html', cafes=cafes)
+    return render_template('explore.html', cafes=cafe_dictionaries)
 
 
 @app.route('/cafe/<int:cafe_id>')
