@@ -7,7 +7,7 @@ from app import app, login_manager, db
 from gravatar import get_gravatar_url
 from app.models import User, Cafe
 from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm
-from utils.boolean_converter import convert_booleans_to_symbols, convert_checkbox_strings_to_booleans
+from utils.boolean_converter import convert_booleans_to_symbols, get_boolean_inputs
 
 
 @login_manager.user_loader
@@ -77,8 +77,10 @@ def suggest_place():
 def explore():
     if request.args:
         search_filters = request.args.to_dict()
-        boolean_filters = convert_checkbox_strings_to_booleans(search_filters)
-        cafes = db.session.execute(db.select(Cafe).filter_by(**boolean_filters)).scalars().all()
+        boolean_filters = get_boolean_inputs(search_filters)
+        sort_by = search_filters.get('sort_by')
+        sort_column = getattr(Cafe, sort_by) if sort_by else None
+        cafes = db.session.execute(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters)).scalars().all()
     else:
         cafes = db.session.execute(db.select(Cafe)).scalars().all()
     cafe_dictionaries = [cafe.to_dict() for cafe in cafes]

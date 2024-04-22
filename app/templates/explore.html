@@ -4,29 +4,50 @@
 
 {% block content %}
 <div class="container-fluid my-2">
-    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#filter-model">Filter</button>
+    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#filter-model">Filter & Sort
+    </button>
 </div>
 <div class="modal fade" id="filter-model" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="filterModalLabel">Filter</h1>
+                <h1 class="modal-title fs-5" id="filterModalLabel">Filter & Sort</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ url_for('explore') }}" method="GET">
                 <div class="modal-body">
 
                     <div class="container text-center">
-                        <div class="btn-group" role="group" aria-label="filter toggles">
+                        <label for="filter_group">Filter: </label>
+                        <div class="btn-group" role="group" aria-label="filters" id="filter_group">
                             <input type="checkbox" class="btn-check" name="has_wifi" id="wifi_check" autocomplete="off">
                             <label class="btn btn-outline-dark" for="wifi_check">Wi-Fi</label>
-                            <input type="checkbox" class="btn-check" name="has_sockets" id="socket_check" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="has_sockets" id="socket_check"
+                                   autocomplete="off">
                             <label class="btn btn-outline-dark" for="socket_check">Sockets</label>
-                            <input type="checkbox" class="btn-check" name="has_toilet" id="toilet_check" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="has_toilet" id="toilet_check"
+                                   autocomplete="off">
                             <label class="btn btn-outline-dark" for="toilet_check">Toilet</label>
                             <input type="checkbox" class="btn-check" name="can_take_calls" id="calls_check"
                                    autocomplete="off">
                             <label class="btn btn-outline-dark" for="calls_check">Takes Calls</label>
+                        </div>
+                        <div class="my-3"></div>
+                        <hr class="my-3">
+                        <label for="sort_group">Sort By: </label>
+                        <div class="btn-group" role="group" aria-label="sort by" id="sort_group">
+                            <input type="radio" class="btn-check" name="sort_by" id="name_radio" value="name" autocomplete="off"
+                                   checked>
+                            <label class="btn btn-outline-dark" for="name_radio">Name</label>
+
+                            <input type="radio" class="btn-check" name="sort_by" id="rating_radio" value="average_rating" autocomplete="off">
+                            <label class="btn btn-outline-dark" for="rating_radio">Rating</label>
+
+                            <input type="radio" class="btn-check" name="sort_by" id="location_radio" value="location" autocomplete="off">
+                            <label class="btn btn-outline-dark" for="location_radio">Location</label>
+
+                            <input type="radio" class="btn-check" name="sort_by" id="coffe_price_radio" value="coffee_price" autocomplete="off">
+                            <label class="btn btn-outline-dark" for="coffe_price_radio">Coffee Price</label>
                         </div>
                     </div>
 

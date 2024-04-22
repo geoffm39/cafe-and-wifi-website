@@ -16,6 +16,6 @@ def value_is_true(value):
     return value
 
 
-def convert_checkbox_strings_to_booleans(input_dictionary: dict):
-    converted_dictionary = {key: True if value == 'on' else False for key, value in input_dictionary.items()}
-    return converted_dictionary
+def get_boolean_inputs(input_dictionary: dict):
+    boolean_inputs = {key: True for key, value in input_dictionary.items() if value == 'on'}
+    return boolean_inputs
