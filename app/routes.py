@@ -80,9 +80,9 @@ def explore():
         boolean_filters = get_boolean_inputs(search_filters)
         sort_by = search_filters.get('sort_by')
         sort_column = getattr(Cafe, sort_by) if sort_by else None
-        cafes = db.session.execute(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters)).scalars().all()
+        cafes = db.paginate(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters), per_page=12)
     else:
-        cafes = db.session.execute(db.select(Cafe)).scalars().all()
+        cafes = db.paginate(db.select(Cafe), per_page=12)
     cafe_dictionaries = [cafe.to_dict() for cafe in cafes]
     for cafe in cafe_dictionaries:
         convert_booleans_to_symbols(cafe)
