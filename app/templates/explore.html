@@ -20,16 +20,20 @@
                     <div class="container text-center">
                         <label for="filter_group">Filter: </label>
                         <div class="btn-group" role="group" aria-label="filters" id="filter_group">
-                            <input type="checkbox" class="btn-check" name="has_wifi" id="wifi_check" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="has_wifi" id="wifi_check" autocomplete="off"
+                                   {% if request.args.get('has_wifi') == 'on' %}checked{% endif %}>
                             <label class="btn btn-outline-dark" for="wifi_check">Wi-Fi</label>
                             <input type="checkbox" class="btn-check" name="has_sockets" id="socket_check"
-                                   autocomplete="off">
+                                   autocomplete="off"
+                                   {% if request.args.get('has_sockets') == 'on' %}checked{% endif %}>
                             <label class="btn btn-outline-dark" for="socket_check">Sockets</label>
                             <input type="checkbox" class="btn-check" name="has_toilet" id="toilet_check"
-                                   autocomplete="off">
+                                   autocomplete="off"
+                                   {% if request.args.get('has_toilet') == 'on' %}checked{% endif %}>
                             <label class="btn btn-outline-dark" for="toilet_check">Toilet</label>
                             <input type="checkbox" class="btn-check" name="can_take_calls" id="calls_check"
-                                   autocomplete="off">
+                                   autocomplete="off"
+                                   {% if request.args.get('can_take_calls') == 'on' %}checked{% endif %}>
                             <label class="btn btn-outline-dark" for="calls_check">Takes Calls</label>
                         </div>
                         <div class="my-3"></div>
@@ -38,26 +42,29 @@
                         <div class="btn-group" role="group" aria-label="sort by" id="sort_group">
                             <input type="radio" class="btn-check" name="sort_by" id="name_radio" value="name"
                                    autocomplete="off"
-                                   checked>
+                                   {% if request.args.get('sort_by') == 'name' %}checked{% endif %}>
                             <label class="btn btn-outline-dark" for="name_radio">Name</label>
 
                             <input type="radio" class="btn-check" name="sort_by" id="rating_radio"
-                                   value="average_rating" autocomplete="off">
+                                   value="average_rating" autocomplete="off"
+                                   {% if request.args.get('sort_by') == 'average_rating' %}checked{% endif %}>
                             <label class="btn btn-outline-dark" for="rating_radio">Rating</label>
 
                             <input type="radio" class="btn-check" name="sort_by" id="location_radio" value="location"
-                                   autocomplete="off">
+                                   autocomplete="off"
+                                   {% if request.args.get('sort_by') == 'location' %}checked{% endif %}>
                             <label class="btn btn-outline-dark" for="location_radio">Location</label>
 
                             <input type="radio" class="btn-check" name="sort_by" id="coffe_price_radio"
-                                   value="coffee_price" autocomplete="off">
+                                   value="coffee_price" autocomplete="off"
+                                   {% if request.args.get('sort_by') == 'coffee_price' %}checked{% endif %}>
                             <label class="btn btn-outline-dark" for="coffe_price_radio">Coffee Price</label>
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Clear Filters</button>
+                    <a href="{{ url_for('explore') }}" type="button" class="btn btn-secondary">Clear Filters</a>
                     <button type="submit" class="btn btn-warning">Apply Filters</button>
                 </div>
             </form>
@@ -125,19 +132,22 @@
             {% set _ = args_without_page.pop('page', None) %}
             {% if pagination.has_prev %}
             <li class="page-item">
-                <a class="page-link" href="{{ url_for('explore', page=pagination.prev_num, **args_without_page) }}" aria-label="Previous">
+                <a class="page-link" href="{{ url_for('explore', page=pagination.prev_num, **args_without_page) }}"
+                   aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             {% endif %}
             {% for page_number in pagination.iter_pages() %}
             <li class="page-item {% if page_number == pagination.page %}active{% endif %}">
-                <a class="page-link" href="{{ url_for('explore', page=page_number, **args_without_page) }}">{{ page_number }}</a>
+                <a class="page-link" href="{{ url_for('explore', page=page_number, **args_without_page) }}">{{
+                    page_number }}</a>
             </li>
             {% endfor %}
             {% if pagination.has_next %}
             <li class="page-item">
-                <a class="page-link" href="{{ url_for('explore', page=pagination.next_num, **args_without_page) }}" aria-label="Next">
+                <a class="page-link" href="{{ url_for('explore', page=pagination.next_num, **args_without_page) }}"
+                   aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
