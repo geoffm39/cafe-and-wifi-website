@@ -80,3 +80,9 @@
     color: #000;
     box-shadow: 0 0 0 0rem
 }
+
+.pagination .page-item.active .page-link{
+    background-color: #ffc107;
+    border-color: #000;
+    color: #000;
+}

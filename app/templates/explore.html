@@ -125,7 +125,7 @@
         </li>
       {% endif %}
       {% for page_number in pagination.iter_pages() %}
-        <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
+        <li class="page-item {% if page_number == pagination.page %}active{% endif %}">
             <a class="page-link" href="{{ url_for('explore', page=page_number) }}">{{ page_number }}</a>
         </li>
       {% endfor %}
