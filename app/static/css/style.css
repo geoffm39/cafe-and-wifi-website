@@ -66,3 +66,17 @@
     background-color: #ffc107;
     color: #000;
 }
+
+.page-link {
+    color: #000;
+}
+
+.page-link:hover {
+    color: #ffc107;
+}
+
+.page-link:focus {
+    background-color: #ffc107;
+    color: #000;
+    box-shadow: 0 0 0 0rem
+}

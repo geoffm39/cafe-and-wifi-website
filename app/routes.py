@@ -75,18 +75,19 @@ def suggest_place():
 
 @app.route('/explore')
 def explore():
+    page = request.args.get('page', 1, type=int)
     if request.args:
         search_filters = request.args.to_dict()
         boolean_filters = get_boolean_inputs(search_filters)
         sort_by = search_filters.get('sort_by')
         sort_column = getattr(Cafe, sort_by) if sort_by else None
-        cafes = db.paginate(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters), per_page=12)
+        cafes_page = db.paginate(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters), per_page=12)
     else:
-        cafes = db.paginate(db.select(Cafe), per_page=12)
-    cafe_dictionaries = [cafe.to_dict() for cafe in cafes]
+        cafes_page = db.paginate(db.select(Cafe), page=page, per_page=12)
+    cafe_dictionaries = [cafe.to_dict() for cafe in cafes_page]
     for cafe in cafe_dictionaries:
         convert_booleans_to_symbols(cafe)
-    return render_template('explore.html', cafes=cafe_dictionaries)
+    return render_template('explore.html', pagination=cafes_page, cafes=cafe_dictionaries)
 
 
 @app.route('/cafe/<int:cafe_id>')
