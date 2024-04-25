@@ -36,17 +36,21 @@
                         <hr class="my-3">
                         <label for="sort_group">Sort By: </label>
                         <div class="btn-group" role="group" aria-label="sort by" id="sort_group">
-                            <input type="radio" class="btn-check" name="sort_by" id="name_radio" value="name" autocomplete="off"
+                            <input type="radio" class="btn-check" name="sort_by" id="name_radio" value="name"
+                                   autocomplete="off"
                                    checked>
                             <label class="btn btn-outline-dark" for="name_radio">Name</label>
 
-                            <input type="radio" class="btn-check" name="sort_by" id="rating_radio" value="average_rating" autocomplete="off">
+                            <input type="radio" class="btn-check" name="sort_by" id="rating_radio"
+                                   value="average_rating" autocomplete="off">
                             <label class="btn btn-outline-dark" for="rating_radio">Rating</label>
 
-                            <input type="radio" class="btn-check" name="sort_by" id="location_radio" value="location" autocomplete="off">
+                            <input type="radio" class="btn-check" name="sort_by" id="location_radio" value="location"
+                                   autocomplete="off">
                             <label class="btn btn-outline-dark" for="location_radio">Location</label>
 
-                            <input type="radio" class="btn-check" name="sort_by" id="coffe_price_radio" value="coffee_price" autocomplete="off">
+                            <input type="radio" class="btn-check" name="sort_by" id="coffe_price_radio"
+                                   value="coffee_price" autocomplete="off">
                             <label class="btn btn-outline-dark" for="coffe_price_radio">Coffee Price</label>
                         </div>
                     </div>
@@ -115,27 +119,28 @@
     {% endfor %}
 </div>
 <div class="d-flex justify-content-center">
-<nav aria-label="cafe navigation">
-  <ul class="pagination">
-      {% if pagination.has_prev %}
-        <li class="page-item">
-          <a class="page-link" href="{{ url_for('explore', page=pagination.prev_num) }}" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-      {% endif %}
-      {% for page_number in pagination.iter_pages() %}
-        <li class="page-item {% if page_number == pagination.page %}active{% endif %}">
-            <a class="page-link" href="{{ url_for('explore', page=page_number) }}">{{ page_number }}</a>
-        </li>
-      {% endfor %}
-      {% if pagination.has_next %}
-        <li class="page-item">
-          <a class="page-link" href="{{ url_for('explore', page=pagination.next_num) }}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      {% endif %}
-  </ul>
-</nav></div>
+    <nav aria-label="cafe navigation">
+        <ul class="pagination">
+            {% if pagination.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('explore', page=pagination.prev_num) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+            {% for page_number in pagination.iter_pages() %}
+            <li class="page-item {% if page_number == pagination.page %}active{% endif %}">
+                <a class="page-link" href="{{ url_for('explore', page=page_number) }}">{{ page_number }}</a>
+            </li>
+            {% endfor %}
+            {% if pagination.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('explore', page=pagination.next_num) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 {% endblock %}
