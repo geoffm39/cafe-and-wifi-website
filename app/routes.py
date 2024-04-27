@@ -9,6 +9,7 @@ from app.models import User, Cafe
 from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm
 from utils.boolean_converter import convert_booleans_to_symbols, get_boolean_inputs
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return db.get_or_404(User, user_id)
