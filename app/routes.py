@@ -94,6 +94,7 @@ def view_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
     cafe_dictionary = requested_cafe.to_dict()
     convert_booleans_to_symbols(cafe_dictionary)
+    cafe_dictionary['average_rating'] = 2.5
     return render_template('cafe.html', cafe=cafe_dictionary)
 
 

@@ -112,3 +112,16 @@
     position: relative;
     z-index: 1;
 }
+
+.cafe-rating {
+    display: flex;
+    align-items: center;
+}
+
+.cafe-rating img {
+    margin-left: 3px;
+}
+
+.cafe-rating img:first-child {
+    margin-left: 15px;
+}

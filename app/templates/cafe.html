@@ -13,7 +13,21 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <p>rating</p>
+            <h3 class="cafe-rating">
+                {% if cafe.average_rating %}
+                {{ cafe.average_rating }}
+                {% for num in range(1, 6) %}
+                {% if cafe.average_rating >= num %}
+                <img src="{{ url_for('static', filename='images/star-yellow.png') }}" alt="star">
+                {% elif cafe.average_rating < num and cafe.average_rating > num-1 %}
+                <img src="{{ url_for('static', filename='images/star-half.png') }}" alt="star">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/star-gray.png') }}" alt="star">
+                {% endif %}
+                {% endfor %}
+                {% else %}</h3>
+            <h5>No ratings yet - rate this cafe!</h5>
+            {% endif %}
         </div>
         <div class="col-4">
             <ul class="list-group list-group-flush">
