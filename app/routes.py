@@ -92,7 +92,9 @@ def explore():
 @app.route('/cafe/<int:cafe_id>')
 def view_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
-    return render_template('cafe.html', cafe=requested_cafe)
+    cafe_dictionary = requested_cafe.to_dict()
+    convert_booleans_to_symbols(cafe_dictionary)
+    return render_template('cafe.html', cafe=cafe_dictionary)
 
 
 @app.route('/contact')

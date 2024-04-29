@@ -10,4 +10,31 @@
         <p class="col-lg-8 mx-auto fs-5 text-muted">{{ cafe.location }}</p>
     </div>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+
+        </div>
+        <div class="col-4">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between">
+                    Wi-Fi:
+                    <span>{{ cafe.has_wifi }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    Sockets:
+                    <span>{{ cafe.has_sockets }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    Toilet:
+                    <span>{{ cafe.has_toilet }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    Can take calls:
+                    <span>{{ cafe.can_take_calls }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
