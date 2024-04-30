@@ -125,3 +125,31 @@
 .cafe-rating img:first-child {
     margin-left: 15px;
 }
+
+.rating {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    direction: rtl;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    cursor: pointer;
+}
+
+.rating label:before {
+    content: '\2605';
+    font-size: 36px;
+    color: #ccc;
+    display: inline-block;
+}
+
+.rating label:hover:before,
+.rating label:hover ~ label:before,
+.rating input:checked ~ label:before {
+    color: #ffc107;
+}

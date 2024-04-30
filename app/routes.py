@@ -89,7 +89,7 @@ def explore():
     return render_template('explore.html', pagination=cafes_page, cafes=cafe_dictionaries)
 
 
-@app.route('/cafe/<int:cafe_id>')
+@app.route('/cafe/<int:cafe_id>', methods=['GET', 'POST'])
 def view_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
     cafe_dictionary = requested_cafe.to_dict()

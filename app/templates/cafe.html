@@ -28,6 +28,24 @@
                 {% else %}</h3>
             <h5>No ratings yet - rate this cafe!</h5>
             {% endif %}
+            <div class="container mt-5">
+        <h2>Rate this item:</h2>
+        <form id="ratingForm" method="POST" action="{{ url_for('view_cafe', cafe_id=cafe.id) }}">
+            <fieldset class="rating">
+                <input type="radio" id="star5" name="rating" value="5" />
+                <label class="full" for="star5" title="5 stars" ></label>
+                <input type="radio" id="star4" name="rating" value="4" />
+                <label class="full" for="star4" title="4 stars"></label>
+                <input type="radio" id="star3" name="rating" value="3" />
+                <label class="full" for="star3" title="3 stars"></label>
+                <input type="radio" id="star2" name="rating" value="2" />
+                <label class="full" for="star2" title="2 stars"></label>
+                <input type="radio" id="star1" name="rating" value="1" />
+                <label class="full" for="star1" title="1 star"></label>
+            </fieldset>
+            <button type="submit" class="btn btn-primary mt-3">Submit Rating</button>
+        </form>
+    </div>
         </div>
         <div class="col-4">
             <ul class="list-group list-group-flush">
