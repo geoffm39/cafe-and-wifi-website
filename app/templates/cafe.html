@@ -36,9 +36,9 @@
         <h1 class="text-body-emphasis">{{ cafe.name }}</h1>
         <p class="col-lg-8 mx-auto fs-5 text-muted">{{ cafe.location }}</p>
         <form id="favouriteForm" method="POST" action="{{ url_for('view_cafe', cafe_id=cafe.id) }}">
-            <input type="checkbox" id="favourite-btn" class="d-none">
-            <label for="favourite-btn" class="btn btn-outline-danger position-absolute bottom-0 start-0 m-3 favourite-btn">
-                <img src="{{ url_for('static', filename='images/favourite-white.png') }}" alt="favourite" class="favourite-icon">
+            <input type="checkbox" id="favourite-btn" class="btn-check">
+            <label for="favourite-btn" class="btn btn-outline-danger position-absolute bottom-0 start-0 favourite-label">
+                <img src="{{ url_for('static', filename='images/favourite.png') }}" alt="favourite">
             </label>
         </form>
     </div>

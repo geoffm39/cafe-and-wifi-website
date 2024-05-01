@@ -154,3 +154,10 @@
     color: #ffc107;
 }
 
+.favourite-label {
+    border: none;
+}
+
+.btn-check:checked + .btn-outline-danger {
+    background-color: #ffc107;
+}
