@@ -119,6 +119,19 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
+            <ul class="comment-list">
+            {% for comment in cafe.comments %}
+                <li>
+                    <div class="comment-avatar">
+                        <img src="{{ comment.user.avatar_url}}" alt="user avatar">
+                    </div>
+                    <div class="comment-text">
+                        <p>{{ comment.text|safe }}</p>
+                        <span class="comment-user comment-date">{{ comment.user.name }}</span>
+                    </div>
+                </li>
+            </ul>
+            {% endfor %}
             {{ ckeditor.load() }}
             {{ ckeditor.config(name='comment') }}
             {{ render_form(comment_form, novalidate=True) }}
