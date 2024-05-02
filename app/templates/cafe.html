@@ -54,7 +54,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-8">
+        <div class="col-4">
             {% if cafe.average_rating %}
             <h3 class="cafe-rating">
                 {{ cafe.average_rating }}
@@ -74,6 +74,11 @@
             <button type="button" class="btn btn-warning my-2" data-bs-toggle="modal" data-bs-target="#rating-model">
                 Rate this Cafe
             </button>
+        </div>
+        <div class="col-4">
+            <a href="{{ cafe.map_url }}" target="_blank">
+                <img src="{{ url_for('static', filename='images/map.png') }}" alt="map">
+            </a>
         </div>
         <div class="col-4">
             <ul class="list-group list-group-flush">
