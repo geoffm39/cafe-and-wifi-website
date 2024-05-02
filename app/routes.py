@@ -95,7 +95,15 @@ def view_cafe(cafe_id):
     cafe_dictionary = requested_cafe.to_dict()
     convert_booleans_to_symbols(cafe_dictionary)
     cafe_dictionary['average_rating'] = 2.5
-    return render_template('cafe.html', cafe=cafe_dictionary)
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        if current_user.is_authenticated:
+            print('post comment')
+            return redirect(url_for('view_cafe', cafe_id=requested_cafe.id))
+        return redirect(url_for('login'))
+    return render_template('cafe.html',
+                           cafe=cafe_dictionary,
+                           comment_form=comment_form)
 
 
 @app.route('/contact')

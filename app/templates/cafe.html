@@ -1,3 +1,4 @@
+{% from "bootstrap5/form.html" import render_form %}
 {% extends 'base.html' %}
 
 {% block title %}{{ cafe.name }}{% endblock %}
@@ -112,6 +113,18 @@
                     <span>{{ cafe.can_take_calls }}</span>
                 </li>
             </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            {{ ckeditor.load() }}
+            {{ ckeditor.config(name='comment') }}
+            {{ render_form(comment_form, novalidate=True) }}
+        </div>
+        <div class="col-4">
+
         </div>
     </div>
 </div>
