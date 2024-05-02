@@ -54,7 +54,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-4">
+        <div class="col-3">
             {% if cafe.average_rating %}
             <h3 class="cafe-rating">
                 {{ cafe.average_rating }}
@@ -75,10 +75,23 @@
                 Rate this Cafe
             </button>
         </div>
-        <div class="col-4">
+        <div class="col-1">
             <a href="{{ cafe.map_url }}" target="_blank">
                 <img src="{{ url_for('static', filename='images/map.png') }}" alt="map">
             </a>
+        </div>
+
+        <div class="col-4">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between">
+                    Seats:
+                    <span>{{ cafe.seats }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    Coffee price:
+                    <span>{{ cafe.coffee_price }}</span>
+                </li>
+            </ul>
         </div>
         <div class="col-4">
             <ul class="list-group list-group-flush">
