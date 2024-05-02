@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, ForeignKey, Text, Boolean, Float, Column, CheckConstraint
+from sqlalchemy import String, ForeignKey, Column, CheckConstraint
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from flask_login import UserMixin
 from typing import List, Optional
@@ -23,6 +23,7 @@ class User(db.Model, UserMixin):
     occupation = Mapped[Optional[str]]
     ratings: Mapped[List['Rating']] = relationship(back_populates='user', cascade='all, delete-orphan')
     favourite_cafes: Mapped[List['Cafe']] = relationship(secondary=favourites)
+    comments: Mapped[List['Comment']] = relationship(back_populates='user', cascade='all, delete-orphan')
 
 
 class Cafe(db.Model):
@@ -40,6 +41,7 @@ class Cafe(db.Model):
     coffee_price: Mapped[Optional[str]] = mapped_column(String(100))
     average_rating: Mapped[Optional[float]]
     ratings: Mapped[List['Rating']] = relationship(back_populates='cafe', cascade='all, delete-orphan')
+    comments: Mapped[List['Comment']] = relationship(back_populates='cafe', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
@@ -53,6 +55,15 @@ class Rating(db.Model):
     user: Mapped['User'] = relationship(back_populates='ratings')
     cafe_id: Mapped[int] = mapped_column(ForeignKey('cafe.id'))
     cafe: Mapped['Cafe'] = relationship(back_populates='ratings')
+
+
+class Comment(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    text: Mapped[str]
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    user: Mapped['User'] = relationship(back_populates='comments')
+    cafe_id: Mapped[int] = mapped_column(ForeignKey('cafe.id'))
+    cafe: Mapped['Cafe'] = relationship(back_populates='comments')
 
 
 with app.app_context():
