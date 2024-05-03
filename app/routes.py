@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 from functools import wraps
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
-from app.models import User, Cafe
+from app.models import User, Cafe, Comment
 from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm
 from utils.boolean_converter import convert_booleans_to_symbols, get_boolean_inputs
 
@@ -92,13 +92,19 @@ def explore():
 @app.route('/cafe/<int:cafe_id>', methods=['GET', 'POST'])
 def view_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
+    print(requested_cafe.comments)
     cafe_dictionary = requested_cafe.to_dict()
+    print(cafe_dictionary)
     convert_booleans_to_symbols(cafe_dictionary)
     cafe_dictionary['average_rating'] = 2.5
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         if current_user.is_authenticated:
-            print('post comment')
+            comment = Comment(text=comment_form.comment.data,
+                              user=current_user,
+                              cafe=requested_cafe)
+            db.session.add(comment)
+            db.session.commit()
             return redirect(url_for('view_cafe', cafe_id=requested_cafe.id))
         return redirect(url_for('login'))
     return render_template('cafe.html',

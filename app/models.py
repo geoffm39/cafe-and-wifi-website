@@ -44,7 +44,9 @@ class Cafe(db.Model):
     comments: Mapped[List['Comment']] = relationship(back_populates='cafe', cascade='all, delete-orphan')
 
     def to_dict(self):
-        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+        dictionary = {column.name: getattr(self, column.name) for column in self.__table__.columns}
+        dictionary['comments'] = [comment for comment in self.comments]
+        return dictionary
 
 
 class Rating(db.Model):
