@@ -92,9 +92,7 @@ def explore():
 @app.route('/cafe/<int:cafe_id>', methods=['GET', 'POST'])
 def view_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
-    print(requested_cafe.comments)
     cafe_dictionary = requested_cafe.to_dict()
-    print(cafe_dictionary)
     convert_booleans_to_symbols(cafe_dictionary)
     cafe_dictionary['average_rating'] = 2.5
     comment_form = CommentForm()
