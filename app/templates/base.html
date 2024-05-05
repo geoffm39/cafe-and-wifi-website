@@ -25,8 +25,8 @@
                 <li><a href="{{ url_for('contact') }}" class="nav-link px-2 text-white">Contact</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" method="GET" action="{{ url_for('explore') }}">
+                <input type="search" id="cafe_search" name="cafe_search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
                        aria-label="Search">
             </form>
             {% if current_user.is_authenticated %}

@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, flash, abort, request
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
+from sqlalchemy import or_
 from functools import wraps
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
@@ -77,12 +78,21 @@ def suggest_place():
 def explore():
     page = request.args.get('page', 1, type=int)
     search_filters = request.args.to_dict()
-    boolean_filters = get_boolean_inputs(search_filters)
     sort_by = search_filters.get('sort_by')
     sort_column = getattr(Cafe, sort_by) if sort_by else None
-    cafes_page = db.paginate(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters),
-                             page=page,
-                             per_page=12)
+    search = search_filters.get('cafe_search')
+    if search:
+        cafes_page = db.paginate(db.select(Cafe).order_by(sort_column).where(or_(
+            Cafe.name.ilike(f'%{search}%'),
+            Cafe.location.ilike(f'%{search}%')
+        )),
+            page=page,
+            per_page=12)
+    else:
+        boolean_filters = get_boolean_inputs(search_filters)
+        cafes_page = db.paginate(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters),
+                                 page=page,
+                                 per_page=12)
     cafe_dictionaries = [cafe.to_dict() for cafe in cafes_page]
     for cafe in cafe_dictionaries:
         convert_booleans_to_symbols(cafe)
