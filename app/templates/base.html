@@ -36,6 +36,16 @@
                     <img src="{{ current_user.avatar_url }}" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" style="">
+                    <li>
+                        <p class="dropdown-item-text">
+                            {% if current_user.name %}
+                                {{ current_user.name }}
+                            {% else %}
+                                {{ current_user.email.split('@')[0] }}
+                            {% endif %}
+                        </p>
+                    </li>
+                        <hr class="dropdown-divider">
                     <li><a class="dropdown-item" href="{{ url_for('suggest_place') }}">Suggest Place</a></li>
                     <li><a class="dropdown-item" href="{{ url_for('profile') }}">Profile</a></li>
                     <li>
