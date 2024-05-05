@@ -146,8 +146,8 @@
             {{ ckeditor.config(name='comment') }}
             {{ render_form(comment_form, novalidate=True) }}
         </div>
-        <div class="col-4">
-
+        <div class="col-4 text-center">
+            <a href="{{ url_for('explore') }}" class="btn btn-warning back-explore-button">Back to Explore</a>
         </div>
     </div>
 </div>
