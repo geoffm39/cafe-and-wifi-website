@@ -121,6 +121,7 @@
         <div class="col-8">
             <div class="comment">
                 <ul class="commentList">
+                    <hr class="comment-divider-top">
                     {% for comment in cafe['comments'] %}
                     <li>
                         <div class="commenterImage">
@@ -128,12 +129,19 @@
                         </div>
                         <div class="commentText">
                             <p>{{ comment.text|safe }}</p>
-                            <span class="comment-user comment-date">{{ comment.user.name }}</span>
+                            <span class="comment-user">
+                                {% if comment.user.name %}
+                                    {{ comment.user.name }}
+                                {% else %}
+                                    {{ comment.user.email.split('@')[0] }}
+                                {% endif %}
+                            </span>
                         </div>
                     </li>
+                    <hr class="comment-divider">
+                    {% endfor %}
                 </ul>
             </div>
-            {% endfor %}
             {{ ckeditor.load() }}
             {{ ckeditor.config(name='comment') }}
             {{ render_form(comment_form, novalidate=True) }}

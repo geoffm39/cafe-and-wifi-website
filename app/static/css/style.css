@@ -163,12 +163,12 @@
 }
 
 .comment {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 .commentList {
   padding:0;
   list-style:none;
-  max-height:200px;
+  max-height:500px;
   overflow:auto;
 }
 .commentList li {
@@ -190,4 +190,21 @@
 }
 .commentText p {
   margin:0;
+}
+
+.comment-user {
+  color:#aaa;
+  font-family:verdana;
+  font-size:13px;
+}
+
+.comment-divider {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-right: 5px;
+}
+
+.comment-divider-top {
+    margin-bottom: 40px;
+    margin-right: 5px;
 }
