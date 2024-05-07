@@ -123,6 +123,17 @@ def view_cafe(cafe_id):
                            comment_form=comment_form)
 
 
+@app.route('/rating/<int:cafe_id>', methods=['POST'])
+def rate_cafe(cafe_id):
+    if current_user.is_authenticated:
+        requested_cafe = db.get_or_404(Cafe, cafe_id)
+        print(request.form.get('rating'))
+        return redirect(url_for('view_cafe', cafe_id=cafe_id))
+    flash('You must login to give a rating', 'warning')
+    return redirect(url_for('login'))
+
+
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
