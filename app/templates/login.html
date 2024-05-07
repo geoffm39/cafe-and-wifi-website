@@ -4,5 +4,13 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+<div class="container my-5">
+    <div class="p-5 text-center bg-body-tertiary rounded-3 cafe-jumbotron position-relative"
+         style="background-image: url('/static/images/login.jpg'); background-size: cover; background-position: center;">
+        <h1 class="text-body-emphasis">Login</h1>
+    </div>
+</div>
+<div class="container">
     {{ render_form(form, novalidate=True) }}
+</div>
 {% endblock %}
