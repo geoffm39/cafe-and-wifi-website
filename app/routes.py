@@ -29,7 +29,7 @@ def register():
         email = form.email.data
         existing_user = db.session.execute(db.Select(User).where(email == User.email)).scalar()
         if existing_user:
-            flash('Email already exists, please login')
+            flash('Email already exists, please login', 'warning')
             return redirect(url_for('login'))
         avatar_url = get_gravatar_url(email)
         new_user = User(email=email,
@@ -48,12 +48,15 @@ def login():
     if form.validate_on_submit():
         user = db.session.execute(db.Select(User).where(User.email == form.email.data)).scalar()
         if not user:
-            flash('Wrong email. Try again')
+            flash('Wrong email. Try again', 'warning')
             return redirect(url_for('login'))
         elif not check_password_hash(user.password, form.password.data):
-            flash('Wrong password. Try again')
+            flash('Wrong password. Try again', 'warning')
             return redirect(url_for('login'))
-        login_user(user)
+        if form.remember_me.data:
+            login_user(user, remember=True)
+        else:
+            login_user(user)
         return redirect(url_for('home'))
     return render_template('login.html', form=form)
 
