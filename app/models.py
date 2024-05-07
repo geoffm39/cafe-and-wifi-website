@@ -1,4 +1,4 @@
-from sqlalchemy import String, ForeignKey, Column, CheckConstraint
+from sqlalchemy import String, ForeignKey, Column, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from flask_login import UserMixin
 from typing import List, Optional
@@ -57,6 +57,10 @@ class Rating(db.Model):
     user: Mapped['User'] = relationship(back_populates='ratings')
     cafe_id: Mapped[int] = mapped_column(ForeignKey('cafe.id'))
     cafe: Mapped['Cafe'] = relationship(back_populates='ratings')
+
+    __table_args__ = (
+        UniqueConstraint('user_id', 'cafe_id', name='user_unique_cafe_rating'),
+    )
 
 
 class Comment(db.Model):

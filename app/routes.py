@@ -6,7 +6,7 @@ from sqlalchemy import or_
 from functools import wraps
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
-from app.models import User, Cafe, Comment
+from app.models import User, Cafe, Comment, Rating
 from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm
 from utils.boolean_converter import convert_booleans_to_symbols, get_boolean_inputs
 
@@ -127,7 +127,12 @@ def view_cafe(cafe_id):
 def rate_cafe(cafe_id):
     if current_user.is_authenticated:
         requested_cafe = db.get_or_404(Cafe, cafe_id)
-        print(request.form.get('rating'))
+        user_rating = int(request.form.get('rating'))
+        rating = Rating(rating=user_rating,
+                        user=current_user,
+                        cafe=requested_cafe)
+        db.session.add(rating)
+        db.session.commit()
         return redirect(url_for('view_cafe', cafe_id=cafe_id))
     flash('You must login to give a rating', 'warning')
     return redirect(url_for('login'))
