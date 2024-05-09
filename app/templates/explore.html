@@ -35,6 +35,12 @@
                                    autocomplete="off"
                                    {% if request.args.get('can_take_calls') == 'on' %}checked{% endif %}>
                             <label class="btn btn-outline-dark" for="calls_check">Takes Calls</label>
+                            {% if current_user.is_authenticated %}
+                            <input type="checkbox" class="btn-check" name="favourite" id="favourite-check"
+                                   autocomplete="off"
+                                   {% if request.args.get('favourite') == 'on' %}checked{% endif %}>
+                            <label class="btn btn-outline-dark" for="favourite-check">Favourite</label>
+                            {% endif %}
                         </div>
                         <div class="my-3"></div>
                         <hr class="my-3">

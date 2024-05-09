@@ -158,7 +158,6 @@ def rate_cafe(cafe_id):
 def toggle_favourite(cafe_id):
     if current_user.is_authenticated:
         requested_cafe = db.get_or_404(Cafe, cafe_id)
-        print(current_user.favourite_cafes)
         if request.form.get('favourite') != 'on':
             current_user.favourite_cafes.remove(requested_cafe)
         else:

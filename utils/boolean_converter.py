@@ -17,5 +17,5 @@ def value_is_true(value):
 
 
 def get_boolean_inputs(input_dictionary: dict):
-    boolean_inputs = {key: True for key, value in input_dictionary.items() if value == 'on'}
+    boolean_inputs = {key: True for key, value in input_dictionary.items() if value == 'on' and key != 'favourite'}
     return boolean_inputs
