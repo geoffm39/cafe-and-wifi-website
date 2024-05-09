@@ -41,11 +41,13 @@
                 <ul class="dropdown-menu text-small" style="">
                     <li>
                         <p class="dropdown-item-text">
-                            {% if current_user.name %}
-                            {{ current_user.name }}
-                            {% else %}
-                            {{ current_user.email.split('@')[0] }}
-                            {% endif %}
+                            <b>
+                                {% if current_user.name %}
+                                {{ current_user.name }}
+                                {% else %}
+                                {{ current_user.email.split('@')[0] }}
+                                {% endif %}
+                            </b>
                         </p>
                     </li>
                     <hr class="dropdown-divider">
