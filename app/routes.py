@@ -67,7 +67,7 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     profile_image_url = get_gravatar_url(current_user.email, size=300)
     profile_form = ProfileForm()
