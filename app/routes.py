@@ -95,9 +95,17 @@ def explore():
             per_page=12)
     else:
         boolean_filters = get_boolean_inputs(search_filters)
-        cafes_page = db.paginate(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters),
-                                 page=page,
-                                 per_page=12)
+        favourite_filter = search_filters.get('favourite')
+        if favourite_filter and current_user.is_authenticated:
+            favourite_cafe_ids = [cafe.id for cafe in current_user.favourite_cafes]
+            cafes_page = db.paginate(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters)
+                                     .filter(Cafe.id.in_(favourite_cafe_ids)),
+                                     page=page,
+                                     per_page=12)
+        else:
+            cafes_page = db.paginate(db.select(Cafe).order_by(sort_column).filter_by(**boolean_filters),
+                                     page=page,
+                                     per_page=12)
     cafe_dictionaries = [cafe.to_dict() for cafe in cafes_page]
     for cafe in cafe_dictionaries:
         convert_booleans_to_symbols(cafe)
