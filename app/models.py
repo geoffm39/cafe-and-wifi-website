@@ -20,7 +20,6 @@ class User(db.Model, UserMixin):
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[Optional[str]] = mapped_column(String(100))
     avatar_url: Mapped[str] = mapped_column(String(250))
-    occupation = Mapped[Optional[str]]
     ratings: Mapped[List['Rating']] = relationship(back_populates='user', cascade='all, delete-orphan')
     favourite_cafes: Mapped[List['Cafe']] = relationship(secondary=favourites)
     comments: Mapped[List['Comment']] = relationship(back_populates='user', cascade='all, delete-orphan')
