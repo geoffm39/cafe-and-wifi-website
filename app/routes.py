@@ -7,7 +7,7 @@ from functools import wraps
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
 from app.models import User, Cafe, Comment, Rating
-from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm
+from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm, ProfileForm, PasswordForm
 from utils.boolean_converter import convert_booleans_to_symbols, get_boolean_inputs
 
 
@@ -31,7 +31,7 @@ def register():
         if existing_user:
             flash('Email already exists, please login', 'warning')
             return redirect(url_for('login'))
-        avatar_url = get_gravatar_url(email)
+        avatar_url = get_gravatar_url(email, size=40)
         new_user = User(email=email,
                         password=hashed_password,
                         avatar_url=avatar_url)
@@ -69,7 +69,13 @@ def logout():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    profile_image_url = get_gravatar_url(current_user.email, size=300)
+    profile_form = ProfileForm()
+    password_form = PasswordForm()
+    return render_template('profile.html',
+                           profile_image_url=profile_image_url,
+                           profile_form=profile_form,
+                           password_form=password_form)
 
 
 @app.route('/suggest-place')

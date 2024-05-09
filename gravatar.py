@@ -13,7 +13,7 @@ def get_hashed_email(email):
     return hashed_email
 
 
-def get_gravatar_url(email, size=40, rating='g', default='retro', force_default=False):
+def get_gravatar_url(email, size=DEFAULT_IMAGE_SIZE, rating='g', default='retro', force_default=False):
     hashed_email = get_hashed_email(email)
     validated_size = validate_image_size(size)
     return f'{REQUEST_URL}{hashed_email}?s={validated_size}&d={default}&r={rating}&f={force_default}'

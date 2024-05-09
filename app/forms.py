@@ -7,9 +7,21 @@ from flask_ckeditor import CKEditorField
 class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    # name = StringField('Name')
-    # occupation = StringField('Occupation')
+    name = StringField('Name (Optional)')
     submit = SubmitField('Create Account')
+
+
+class ProfileForm(FlaskForm):
+    # profile_image =
+    email = StringField('Email', validators=[DataRequired()])
+    name = StringField('Name (Optional)')
+    submit = SubmitField('Update Details')
+
+
+class PasswordForm(FlaskForm):
+    password = PasswordField("Current Password", validators=[DataRequired()])
+    new_password = PasswordField("New Password", validators=[DataRequired()])
+    submit = SubmitField('Change Password')
 
 
 class LoginForm(FlaskForm):

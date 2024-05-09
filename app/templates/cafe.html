@@ -148,7 +148,7 @@
             {{ render_form(comment_form, novalidate=True, button_style='btn btn-warning') }}
         </div>
         <div class="col-4 text-center">
-            <a href="{{ url_for('explore') }}" class="btn btn-warning back-explore-button">Back to Explore</a>
+            <a href="{{ url_for('explore', **request.args) }}" class="btn btn-warning back-explore-button">Back to Explore</a>
         </div>
     </div>
 </div>

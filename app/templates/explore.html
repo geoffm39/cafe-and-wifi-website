@@ -133,7 +133,7 @@
                                 </li>
                             </ul>
                             <div class="text-center">
-                                <a href="{{ url_for('view_cafe', cafe_id=cafe.id) }}" class="btn btn-warning">View</a>
+                                <a href="{{ url_for('view_cafe', cafe_id=cafe.id, **request.args) }}" class="btn btn-warning">View</a>
                             </div>
                         </div>
                     </div>
