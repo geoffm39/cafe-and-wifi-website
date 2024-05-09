@@ -109,6 +109,9 @@ def view_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
     cafe_dictionary = requested_cafe.to_dict()
     convert_booleans_to_symbols(cafe_dictionary)
+    favourite_cafe = False
+    if current_user.is_authenticated:
+        favourite_cafe = requested_cafe in current_user.favourite_cafes
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         if current_user.is_authenticated:
@@ -121,10 +124,11 @@ def view_cafe(cafe_id):
         return redirect(url_for('login'))
     return render_template('cafe.html',
                            cafe=cafe_dictionary,
-                           comment_form=comment_form)
+                           comment_form=comment_form,
+                           favourite_cafe=favourite_cafe)
 
 
-@app.route('/rating/<int:cafe_id>', methods=['POST'])
+@app.route('/rate-cafe/<int:cafe_id>', methods=['POST'])
 def rate_cafe(cafe_id):
     if current_user.is_authenticated:
         requested_cafe = db.get_or_404(Cafe, cafe_id)
@@ -147,6 +151,21 @@ def rate_cafe(cafe_id):
         db.session.commit()
         return redirect(url_for('view_cafe', cafe_id=cafe_id))
     flash('You must login to give a rating', 'warning')
+    return redirect(url_for('login'))
+
+
+@app.route('/toggle-favourite/<int:cafe_id>', methods=['POST'])
+def toggle_favourite(cafe_id):
+    if current_user.is_authenticated:
+        requested_cafe = db.get_or_404(Cafe, cafe_id)
+        print(current_user.favourite_cafes)
+        if request.form.get('favourite') != 'on':
+            current_user.favourite_cafes.remove(requested_cafe)
+        else:
+            current_user.favourite_cafes.append(requested_cafe)
+        db.session.commit()
+        return redirect(url_for('view_cafe', cafe_id=cafe_id))
+    flash('You must login to save favourites', 'warning')
     return redirect(url_for('login'))
 
 
