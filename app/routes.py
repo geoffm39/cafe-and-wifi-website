@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, abort, request
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
-from sqlalchemy import or_, func
+from sqlalchemy import or_, and_, func
 from functools import wraps
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
@@ -85,10 +85,12 @@ def explore():
     sort_column = getattr(Cafe, sort_by) if sort_by else None
     search = search_filters.get('cafe_search')
     if search:
-        cafes_page = db.paginate(db.select(Cafe).order_by(sort_column).where(or_(
-            Cafe.name.ilike(f'%{search}%'),
-            Cafe.location.ilike(f'%{search}%')
-        )),
+        cafes_page = db.paginate(db.select(Cafe).order_by(sort_column).where(
+            or_(
+                Cafe.name.ilike(f'%{search}%'),
+                Cafe.location.ilike(f'%{search}%')
+            )
+        ),
             page=page,
             per_page=12)
     else:
@@ -127,10 +129,18 @@ def rate_cafe(cafe_id):
     if current_user.is_authenticated:
         requested_cafe = db.get_or_404(Cafe, cafe_id)
         user_rating = int(request.form.get('rating'))
-        rating = Rating(rating=user_rating,
-                        user=current_user,
-                        cafe=requested_cafe)
-        db.session.add(rating)
+        current_user_rating = db.session.execute(db.Select(Rating).where(
+            and_(
+                Rating.user == current_user,
+                Rating.cafe == requested_cafe
+            ))).scalar()
+        if current_user_rating:
+            current_user_rating.rating = user_rating
+        else:
+            rating = Rating(rating=user_rating,
+                            user=current_user,
+                            cafe=requested_cafe)
+            db.session.add(rating)
         db.session.commit()
         requested_cafe.average_rating = db.session.execute(
             db.Select(func.avg(Rating.rating)).where(Rating.cafe_id == cafe_id)).scalar()
