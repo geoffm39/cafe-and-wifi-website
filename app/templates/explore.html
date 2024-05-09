@@ -89,11 +89,23 @@
                 <div class="flip-card-back">
                     <div class="card">
                         <div class="card-body">
-                            <div class="text-center">
+                            <div class="text-center d-flex justify-content-center">
                                 {% if cafe.average_rating %}
-                                <h5 class="card-title">Rating: {{ cafe.average_rating }}</h5>
+                                <h4 class="cafe-rating-card">
+                                    {{ cafe.average_rating }}
+                                    {% for num in range(1, 6) %}
+                                    {% if cafe.average_rating >= num %}
+                                    <img src="{{ url_for('static', filename='images/star-yellow-card.png') }}"
+                                         alt="star">
+                                    {% elif cafe.average_rating < num and cafe.average_rating > num-1 %}
+                                    <img src="{{ url_for('static', filename='images/star-half-card.png') }}" alt="star">
+                                    {% else %}
+                                    <img src="{{ url_for('static', filename='images/star-gray-card.png') }}" alt="star">
+                                    {% endif %}
+                                    {% endfor %}
+                                </h4>
                                 {% else %}
-                                <h5 class="card-title">No ratings yet - rate this cafe!</h5>
+                                <h5 class="card-title">No ratings yet</h5>
                                 {% endif %}
                             </div>
                             <ul class="list-group list-group-flush flip-card-back-text">

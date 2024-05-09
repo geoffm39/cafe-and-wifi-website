@@ -126,6 +126,19 @@
     margin-left: 15px;
 }
 
+.cafe-rating-card {
+    display: flex;
+    align-items: center;
+}
+
+.cafe-rating-card img {
+    margin-left: 3px;
+}
+
+.cafe-rating-card img:first-child {
+    margin-left: 15px;
+}
+
 .rating {
     display: inline-block;
     position: relative;
