@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, abort, request
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 from functools import wraps
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
@@ -107,7 +107,6 @@ def view_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
     cafe_dictionary = requested_cafe.to_dict()
     convert_booleans_to_symbols(cafe_dictionary)
-    cafe_dictionary['average_rating'] = 2.5
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         if current_user.is_authenticated:
@@ -133,10 +132,12 @@ def rate_cafe(cafe_id):
                         cafe=requested_cafe)
         db.session.add(rating)
         db.session.commit()
+        requested_cafe.average_rating = db.session.execute(
+            db.Select(func.avg(Rating.rating)).where(Rating.cafe_id == cafe_id)).scalar()
+        db.session.commit()
         return redirect(url_for('view_cafe', cafe_id=cafe_id))
     flash('You must login to give a rating', 'warning')
     return redirect(url_for('login'))
-
 
 
 @app.route('/contact')
