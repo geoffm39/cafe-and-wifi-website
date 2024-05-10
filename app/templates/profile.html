@@ -4,11 +4,18 @@
 {% block title %}Explore new Places{% endblock %}
 
 {% block content %}
-<div class="text-center m-5">
-    <img src="{{ profile_image_url }}" alt="profile image" class="rounded-circle">
+<div class="text-center mt-5">
+    <img src="{{ profile_image_url }}" alt="profile image" class="rounded-circle profile-image">
+    <h1>{{ current_user.email }}</h1>
+</div>
+<div class="container my-5">
+    <hr>
 </div>
 <div class="container">
     {{ render_form(profile_form, novalidate=True, button_style='btn btn-warning') }}
+</div>
+<div class="container my-5">
+    <hr>
 </div>
 <div class="container">
     {{ render_form(password_form, novalidate=True, button_style='btn btn-warning') }}

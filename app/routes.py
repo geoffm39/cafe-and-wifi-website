@@ -16,6 +16,24 @@ def load_user(user_id):
     return db.get_or_404(User, user_id)
 
 
+def authenticated_only(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        if current_user.is_authenticated:
+            return function(*args, **kwargs)
+        return abort(403)
+    return wrapper
+
+
+def admin_only(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        if current_user.is_authenticated:
+            return function(*args, **kwargs)
+        return abort(403)
+    return wrapper
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
