@@ -80,12 +80,14 @@ def login():
 
 
 @app.route('/logout')
+@authenticated_only
 def logout():
     logout_user()
     return redirect(url_for('home'))
 
 
 @app.route('/profile', methods=['GET', 'POST'])
+@authenticated_only
 def profile():
     profile_image_url = get_gravatar_url(current_user.email, size=300)
     profile_form = ProfileForm()
@@ -97,6 +99,7 @@ def profile():
 
 
 @app.route('/suggest-place')
+@authenticated_only
 def suggest_place():
     return render_template('suggest_place.html')
 
