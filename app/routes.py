@@ -1,9 +1,9 @@
 from flask import render_template, redirect, url_for, flash, abort, request
-from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
+from flask_login import login_user, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.orm import relationship
 from sqlalchemy import or_, and_, func
 from functools import wraps
+import os
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
 from app.models import User, Cafe, Comment, Rating
@@ -29,7 +29,7 @@ def authenticated_only(function):
 def admin_only(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
-        if current_user.is_authenticated:
+        if current_user.email == os.environ.get('ADMIN_EMAIL'):
             return function(*args, **kwargs)
         return abort(403)
 
@@ -54,6 +54,7 @@ def register():
         avatar_url = get_gravatar_url(email, size=40)
         new_user = User(email=email,
                         password=hashed_password,
+                        name=form.name.data,
                         avatar_url=avatar_url)
         db.session.add(new_user)
         db.session.commit()
