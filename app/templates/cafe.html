@@ -44,9 +44,9 @@
          style="background-image: url('{{ cafe.img_url }}'); background-size: cover; background-position: center;">
         <h1 class="text-body-emphasis">{{ cafe.name }}</h1>
         <p class="col-lg-8 mx-auto fs-5 text-muted">{{ cafe.location }}</p>
-        <form id="favouriteForm" method="POST" action="{{ url_for('toggle_favourite', cafe_id=cafe.id) }}">
+        <form id="favouriteForm" method="POST" action="{{ url_for('toggle_favourite', cafe_id=cafe.id, **request.args) }}">
             <input type="checkbox" id="favourite-btn" name="favourite" class="btn-check" onchange="this.form.submit()"
-                {% if favourite_cafe %}checked{% endif %}>
+                {% if is_favourite_cafe %}checked{% endif %}>
             <label for="favourite-btn"
                    class="btn btn-outline-danger position-absolute bottom-0 start-0 favourite-label">
                 <img src="{{ url_for('static', filename='images/favourite.png') }}" alt="favourite">

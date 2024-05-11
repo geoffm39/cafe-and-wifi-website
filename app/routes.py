@@ -22,6 +22,7 @@ def authenticated_only(function):
         if current_user.is_authenticated:
             return function(*args, **kwargs)
         return abort(403)
+
     return wrapper
 
 
@@ -31,6 +32,7 @@ def admin_only(function):
         if current_user.is_authenticated:
             return function(*args, **kwargs)
         return abort(403)
+
     return wrapper
 
 
@@ -90,12 +92,35 @@ def logout():
 @authenticated_only
 def profile():
     profile_image_url = get_gravatar_url(current_user.email, size=300)
-    profile_form = ProfileForm()
+    profile_form = ProfileForm(email=current_user.email,
+                               name=current_user.name)
     password_form = PasswordForm()
+    if profile_form.validate_on_submit():
+        current_user.email = profile_form.email.data
+        current_user.name = profile_form.name.data
+        db.session.commit()
+        flash('Profile information updated', category='warning')
+        return redirect(url_for('profile'))
+    if password_form.validate_on_submit():
+        if check_password_hash(current_user.password, password_form.password.data):
+            current_user.password = generate_password_hash(password_form.new_password.data,
+                                                           method='pbkdf2:sha256',
+                                                           salt_length=8)
+            db.session.commit()
+            flash('Password changed', category='warning')
+        else:
+            flash('Wrong password. Try again', category='warning')
+        return redirect(url_for('profile'))
     return render_template('profile.html',
                            profile_image_url=profile_image_url,
                            profile_form=profile_form,
                            password_form=password_form)
+
+
+# @app.route('change-password', methods=['POST'])
+# @authenticated_only
+# def change_password():
+#     pass
 
 
 @app.route('/suggest-place')
@@ -144,9 +169,9 @@ def view_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
     cafe_dictionary = requested_cafe.to_dict()
     convert_booleans_to_symbols(cafe_dictionary)
-    favourite_cafe = False
+    is_favourite_cafe = False
     if current_user.is_authenticated:
-        favourite_cafe = requested_cafe in current_user.favourite_cafes
+        is_favourite_cafe = requested_cafe in current_user.favourite_cafes
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         if current_user.is_authenticated:
@@ -160,7 +185,7 @@ def view_cafe(cafe_id):
     return render_template('cafe.html',
                            cafe=cafe_dictionary,
                            comment_form=comment_form,
-                           favourite_cafe=favourite_cafe)
+                           is_favourite_cafe=is_favourite_cafe)
 
 
 @app.route('/rate-cafe/<int:cafe_id>', methods=['POST'])
@@ -198,7 +223,7 @@ def toggle_favourite(cafe_id):
         else:
             current_user.favourite_cafes.append(requested_cafe)
         db.session.commit()
-        return redirect(url_for('view_cafe', cafe_id=cafe_id))
+        return redirect(url_for('view_cafe', cafe_id=cafe_id, **request.args))
     flash('You must login to save favourites', 'warning')
     return redirect(url_for('login'))
 
