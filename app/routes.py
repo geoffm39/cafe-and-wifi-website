@@ -117,12 +117,6 @@ def profile():
                            password_form=password_form)
 
 
-# @app.route('change-password', methods=['POST'])
-# @authenticated_only
-# def change_password():
-#     pass
-
-
 @app.route('/suggest-place')
 @authenticated_only
 def suggest_place():
