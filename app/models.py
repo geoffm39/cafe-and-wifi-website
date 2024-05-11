@@ -2,6 +2,7 @@ from sqlalchemy import String, ForeignKey, Column, CheckConstraint, UniqueConstr
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from flask_login import UserMixin
 from typing import List, Optional
+import os
 
 from app import app, db
 
@@ -23,6 +24,9 @@ class User(db.Model, UserMixin):
     ratings: Mapped[List['Rating']] = relationship(back_populates='user', cascade='all, delete-orphan')
     favourite_cafes: Mapped[List['Cafe']] = relationship(secondary=favourites)
     comments: Mapped[List['Comment']] = relationship(back_populates='user', cascade='all, delete-orphan')
+
+    def is_admin(self):
+        return self.email == os.environ.get('ADMIN_EMAIL')
 
 
 class Cafe(db.Model):
