@@ -12,7 +12,6 @@ class RegisterForm(FlaskForm):
 
 
 class ProfileForm(FlaskForm):
-    # profile_image =
     email = StringField('Email', validators=[DataRequired()])
     name = StringField('Name (Optional)')
     submit = SubmitField('Update Details')

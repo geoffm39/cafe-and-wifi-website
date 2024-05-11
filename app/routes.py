@@ -95,13 +95,13 @@ def profile():
     profile_form = ProfileForm(email=current_user.email,
                                name=current_user.name)
     password_form = PasswordForm()
-    if profile_form.validate_on_submit():
+    if profile_form.validate_on_submit() and dict(request.form)['submit'] == 'Update Details':
         current_user.email = profile_form.email.data
         current_user.name = profile_form.name.data
         db.session.commit()
         flash('Profile information updated', category='warning')
         return redirect(url_for('profile'))
-    if password_form.validate_on_submit():
+    elif password_form.validate_on_submit() and dict(request.form)['submit'] == 'Change Password':
         if check_password_hash(current_user.password, password_form.password.data):
             current_user.password = generate_password_hash(password_form.new_password.data,
                                                            method='pbkdf2:sha256',
