@@ -1,10 +1,18 @@
 {% from "bootstrap5/form.html" import render_form %}
+{% from "bootstrap5/utils.html" import render_messages %}
 {% extends 'base.html' %}
 
 {% block title %}Suggest a Cafe{% endblock %}
 
 {% block content %}
+<div class="container my-5">
+    <div class="p-5 text-center bg-body-tertiary rounded-3 cafe-jumbotron position-relative"
+         style="background-image: url('/static/images/suggest_cafe.jpg'); background-size: cover; background-position: center;">
+        <h1 class="text-body-emphasis">Suggest Cafe</h1>
+    </div>
+</div>
 <div class="container">
-    {{ render_form(add_cafe_form, novalidate=True, button_style='btn btn-warning') }}
+    {{ render_messages() }}
+    {{ render_form(add_cafe_form, form_type='horizontal', novalidate=True, button_style='btn btn-warning') }}
 </div>
 {% endblock %}

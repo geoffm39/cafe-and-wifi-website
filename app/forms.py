@@ -35,12 +35,12 @@ class AddCafeForm(FlaskForm):
     location = StringField('Location', validators=[DataRequired()])
     map_url = StringField('Map URL', validators=[DataRequired(), URL()])
     image_url = StringField('Image URL', validators=[DataRequired(), URL()])
-    seats = StringField('Seats', validators=[DataRequired()])
-    coffee_price = StringField('Coffee Price', validators=[DataRequired()])
-    has_sockets = BooleanField('Has Sockets', validators=[DataRequired()])
-    has_toilet = BooleanField('Has Toilet', validators=[DataRequired()])
-    has_wifi = BooleanField('Has Wifi', validators=[DataRequired()])
-    can_take_calls = BooleanField('Can Take Calls', validators=[DataRequired()])
+    seats = StringField('Seats')
+    coffee_price = StringField('Coffee Price')
+    has_sockets = BooleanField('Has Sockets')
+    has_toilet = BooleanField('Has Toilet')
+    has_wifi = BooleanField('Has Wifi')
+    can_take_calls = BooleanField('Can Take Calls')
     submit = SubmitField('Add Cafe')
 
 

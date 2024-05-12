@@ -118,10 +118,30 @@ def profile():
                            password_form=password_form)
 
 
-@app.route('/suggest-place')
+@app.route('/suggest-place', methods=['GET', 'POST'])
 @authenticated_only
 def suggest_place():
     add_cafe_form = AddCafeForm()
+    if add_cafe_form.validate_on_submit():
+        cafe_name = add_cafe_form.name.data
+        existing_cafe = db.session.execute(db.Select(Cafe).where(cafe_name == Cafe.name)).scalar()
+        if existing_cafe:
+            flash('Cafe already exists', 'warning')
+            return redirect(url_for('suggest_place'))
+        suggested_cafe = Cafe(name=cafe_name,
+                              map_url=add_cafe_form.map_url.data,
+                              img_url=add_cafe_form.image_url.data,
+                              location=add_cafe_form.location.data,
+                              has_sockets=add_cafe_form.has_sockets.data,
+                              has_toilet=add_cafe_form.has_toilet.data,
+                              has_wifi=add_cafe_form.has_wifi.data,
+                              can_take_calls=add_cafe_form.can_take_calls.data,
+                              seats=add_cafe_form.seats.data,
+                              coffee_price=add_cafe_form.coffee_price.data)
+        db.session.add(suggested_cafe)
+        db.session.commit()
+        new_cafe = db.session.execute(db.Select(Cafe).where(cafe_name == Cafe.name)).scalar()
+        return redirect(url_for('view_cafe', cafe_id=new_cafe.id))
     return render_template('suggest_place.html', add_cafe_form=add_cafe_form)
 
 
