@@ -121,7 +121,8 @@ def profile():
 @app.route('/suggest-place')
 @authenticated_only
 def suggest_place():
-    return render_template('suggest_place.html')
+    add_cafe_form = AddCafeForm()
+    return render_template('suggest_place.html', add_cafe_form=add_cafe_form)
 
 
 @app.route('/explore')

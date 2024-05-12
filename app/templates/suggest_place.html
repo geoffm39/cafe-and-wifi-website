@@ -1,6 +1,10 @@
+{% from "bootstrap5/form.html" import render_form %}
 {% extends 'base.html' %}
 
-{% block title %}Explore new Places{% endblock %}
+{% block title %}Suggest a Cafe{% endblock %}
 
 {% block content %}
+<div class="container">
+    {{ render_form(add_cafe_form, novalidate=True, button_style='btn btn-warning') }}
+</div>
 {% endblock %}
