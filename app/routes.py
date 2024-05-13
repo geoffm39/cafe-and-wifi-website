@@ -117,6 +117,25 @@ def profile():
                            password_form=password_form)
 
 
+@app.route('/edit/<int:cafe_id>')
+@admin_only
+def edit_cafe(cafe_id):
+    requested_cafe = db.get_or_404(Cafe, cafe_id)
+    edit_form = AddCafeForm(name=requested_cafe.name,
+                            location=requested_cafe.location,
+                            map_url=requested_cafe.map_url,
+                            image_url=requested_cafe.img_url,
+                            seats=requested_cafe.seats,
+                            coffe_price=requested_cafe.coffee_price,
+                            has_sockets=requested_cafe.has_sockets,
+                            has_toilet=requested_cafe.has_toilet,
+                            has_wifi=requested_cafe.has_wifi,
+                            can_take_calls=requested_cafe.can_take_calls)
+    if edit_form.validate_on_submit():
+        pass
+    return render_template('suggest_place.html', edit_form=edit_form)
+
+
 @app.route('/delete/<int:cafe_id>')
 @admin_only
 def delete_cafe(cafe_id):
