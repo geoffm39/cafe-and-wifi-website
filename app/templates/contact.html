@@ -1,6 +1,20 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% from "bootstrap5/utils.html" import render_messages %}
 {% extends 'base.html' %}
 
 {% block title %}Explore new Places{% endblock %}
 
 {% block content %}
+<div class="container my-5">
+    <div class="p-5 text-center bg-body-tertiary rounded-3 cafe-jumbotron position-relative"
+         style="background-image: url('/static/images/contact.jpg'); background-size: cover; background-position: center;">
+        <h1 class="text-body-emphasis">Contact Us</h1>
+    </div>
+</div>
+<div class="container">
+    {{ render_messages() }}
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='message') }}
+    {{ render_form(form, novalidate=True, button_style='btn btn-warning') }}
+</div>
 {% endblock %}

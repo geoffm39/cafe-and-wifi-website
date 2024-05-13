@@ -6,8 +6,9 @@ from functools import wraps
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
 from app.models import User, Cafe, Comment, Rating
-from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm, ProfileForm, PasswordForm
+from app.forms import LoginForm, RegisterForm, AddCafeForm, CommentForm, ProfileForm, PasswordForm, ContactForm
 from utils.boolean_converter import convert_booleans_to_symbols, get_boolean_inputs
+from utils.email import receive_email
 
 
 @login_manager.user_loader
@@ -287,6 +288,16 @@ def toggle_favourite(cafe_id):
     return redirect(url_for('login'))
 
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    return render_template('contact.html')
+    contact_form = ContactForm()
+    if contact_form.validate_on_submit():
+        name = contact_form.name.data
+        email = contact_form.email.data
+        subject = contact_form.subject.data
+        message = contact_form.message.data
+        email_message = f'Name: {name}\nEmail: {email}\n{message}'
+        receive_email(subject, email_message)
+        flash('Message Sent. We will get back to you soon!', 'warning')
+        return redirect(url_for('contact'))
+    return render_template('contact.html', form=contact_form)

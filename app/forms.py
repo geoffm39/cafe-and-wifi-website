@@ -47,3 +47,11 @@ class AddCafeForm(FlaskForm):
 class CommentForm(FlaskForm):
     comment = CKEditorField('Comment', validators=[DataRequired()])
     submit = SubmitField('Post Comment')
+
+
+class ContactForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    subject = StringField('Subject', validators=[DataRequired()])
+    message = CKEditorField('Message', validators=[DataRequired()])
+    submit = SubmitField('Send Message')
