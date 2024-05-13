@@ -117,7 +117,7 @@ def profile():
                            password_form=password_form)
 
 
-@app.route('/edit/<int:cafe_id>')
+@app.route('/edit/<int:cafe_id>', methods=['GET', 'POST'])
 @admin_only
 def edit_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
@@ -152,7 +152,7 @@ def edit_cafe(cafe_id):
     return render_template('suggest_place.html', cafe_form=edit_form, is_edit=True)
 
 
-@app.route('/delete/<int:cafe_id>')
+@app.route('/delete/<int:cafe_id>', methods=['GET', 'POST'])
 @admin_only
 def delete_cafe(cafe_id):
     requested_cafe = db.get_or_404(Cafe, cafe_id)
