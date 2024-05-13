@@ -8,11 +8,17 @@
 <div class="container my-5">
     <div class="p-5 text-center bg-body-tertiary rounded-3 cafe-jumbotron position-relative"
          style="background-image: url('/static/images/suggest_cafe.jpg'); background-size: cover; background-position: center;">
-        <h1 class="text-body-emphasis">Suggest Cafe</h1>
+        <h1 class="text-body-emphasis">
+            {% if is_edit %}
+            Edit Cafe
+            {% else %}
+            Suggest Cafe
+            {% endif %}
+        </h1>
     </div>
 </div>
 <div class="container">
     {{ render_messages() }}
-    {{ render_form(add_cafe_form, form_type='horizontal', novalidate=True, button_style='btn btn-warning') }}
+    {{ render_form(cafe_form, form_type='horizontal', novalidate=True, button_style='btn btn-warning') }}
 </div>
 {% endblock %}

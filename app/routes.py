@@ -132,8 +132,24 @@ def edit_cafe(cafe_id):
                             has_wifi=requested_cafe.has_wifi,
                             can_take_calls=requested_cafe.can_take_calls)
     if edit_form.validate_on_submit():
-        pass
-    return render_template('suggest_place.html', edit_form=edit_form)
+        form_cafe_name = edit_form.name.data
+        existing_cafe = db.session.execute(db.Select(Cafe).where(Cafe.name == form_cafe_name)).scalar()
+        if existing_cafe:
+            flash('Cafe name already exists', 'warning')
+            return redirect(url_for('edit_cafe', cafe_id=requested_cafe.id))
+        requested_cafe.name = form_cafe_name
+        requested_cafe.location = edit_form.location.data
+        requested_cafe.map_url = edit_form.map_url.data
+        requested_cafe.img_url = edit_form.image_url.data
+        requested_cafe.seats = edit_form.seats.data
+        requested_cafe.coffee_price = edit_form.coffee_price.data
+        requested_cafe.has_sockets = edit_form.has_sockets.data
+        requested_cafe.has_toilet = edit_form.has_toilet.data
+        requested_cafe.has_wifi = edit_form.has_wifi.data
+        requested_cafe.can_take_calls = edit_form.can_take_calls.data
+        db.session.commit()
+        return redirect(url_for('view_cafe', cafe_id=requested_cafe.id))
+    return render_template('suggest_place.html', cafe_form=edit_form, is_edit=True)
 
 
 @app.route('/delete/<int:cafe_id>')
@@ -148,28 +164,28 @@ def delete_cafe(cafe_id):
 @app.route('/suggest-place', methods=['GET', 'POST'])
 @authenticated_only
 def suggest_place():
-    add_cafe_form = AddCafeForm()
-    if add_cafe_form.validate_on_submit():
-        cafe_name = add_cafe_form.name.data
+    cafe_form = AddCafeForm()
+    if cafe_form.validate_on_submit():
+        cafe_name = cafe_form.name.data
         existing_cafe = db.session.execute(db.Select(Cafe).where(cafe_name == Cafe.name)).scalar()
         if existing_cafe:
             flash('Cafe already exists', 'warning')
             return redirect(url_for('suggest_place'))
         suggested_cafe = Cafe(name=cafe_name,
-                              map_url=add_cafe_form.map_url.data,
-                              img_url=add_cafe_form.image_url.data,
-                              location=add_cafe_form.location.data,
-                              has_sockets=add_cafe_form.has_sockets.data,
-                              has_toilet=add_cafe_form.has_toilet.data,
-                              has_wifi=add_cafe_form.has_wifi.data,
-                              can_take_calls=add_cafe_form.can_take_calls.data,
-                              seats=add_cafe_form.seats.data,
-                              coffee_price=add_cafe_form.coffee_price.data)
+                              map_url=cafe_form.map_url.data,
+                              img_url=cafe_form.image_url.data,
+                              location=cafe_form.location.data,
+                              has_sockets=cafe_form.has_sockets.data,
+                              has_toilet=cafe_form.has_toilet.data,
+                              has_wifi=cafe_form.has_wifi.data,
+                              can_take_calls=cafe_form.can_take_calls.data,
+                              seats=cafe_form.seats.data,
+                              coffee_price=cafe_form.coffee_price.data)
         db.session.add(suggested_cafe)
         db.session.commit()
         new_cafe = db.session.execute(db.Select(Cafe).where(cafe_name == Cafe.name)).scalar()
         return redirect(url_for('view_cafe', cafe_id=new_cafe.id))
-    return render_template('suggest_place.html', add_cafe_form=add_cafe_form)
+    return render_template('suggest_place.html', cafe_form=cafe_form)
 
 
 @app.route('/explore')

@@ -41,7 +41,7 @@ class AddCafeForm(FlaskForm):
     has_toilet = BooleanField('Has Toilet')
     has_wifi = BooleanField('Has Wifi')
     can_take_calls = BooleanField('Can Take Calls')
-    submit = SubmitField('Add Cafe')
+    submit = SubmitField('Submit Cafe Information')
 
 
 class CommentForm(FlaskForm):
