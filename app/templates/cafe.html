@@ -149,8 +149,12 @@
         </div>
         <div class="col-4 text-center cafe-buttons">
             <hr>
-            <a href="{{ url_for('edit_cafe', cafe_id=cafe.id) }}" class="btn btn-warning back-explore-button">Edit Cafe</a>
-            <a href="{{ url_for('delete_cafe', cafe_id=cafe.id) }}" class="btn btn-warning back-explore-button">Delete Cafe</a>
+            {% if current_user.is_authenticated %}
+                {% if current_user.is_admin() %}
+                <a href="{{ url_for('edit_cafe', cafe_id=cafe.id) }}" class="btn btn-warning back-explore-button">Edit Cafe</a>
+                <a href="{{ url_for('delete_cafe', cafe_id=cafe.id) }}" class="btn btn-warning back-explore-button">Delete Cafe</a>
+                {% endif %}
+            {% endif %}
             <a href="{{ url_for('explore', **request.args) }}" class="btn btn-warning back-explore-button">Back to Explore</a>
         </div>
     </div>
