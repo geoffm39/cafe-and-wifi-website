@@ -29,7 +29,7 @@ def authenticated_only(function):
 def admin_only(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
-        if current_user.email == os.environ.get('ADMIN_EMAIL'):
+        if current_user.is_admin():
             return function(*args, **kwargs)
         return abort(403)
 
@@ -116,6 +116,15 @@ def profile():
                            profile_image_url=profile_image_url,
                            profile_form=profile_form,
                            password_form=password_form)
+
+
+@app.route('/delete/<int:cafe_id>')
+@admin_only
+def delete_cafe(cafe_id):
+    requested_cafe = db.get_or_404(Cafe, cafe_id)
+    db.session.delete(requested_cafe)
+    db.session.commit()
+    return redirect(url_for('explore'))
 
 
 @app.route('/suggest-place', methods=['GET', 'POST'])
