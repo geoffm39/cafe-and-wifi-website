@@ -3,7 +3,6 @@ from flask_login import login_user, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import or_, and_, func
 from functools import wraps
-import os
 from app import app, login_manager, db
 from gravatar import get_gravatar_url
 from app.models import User, Cafe, Comment, Rating
